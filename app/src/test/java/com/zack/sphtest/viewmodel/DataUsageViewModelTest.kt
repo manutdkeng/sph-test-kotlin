@@ -1,11 +1,11 @@
-package com.zack.sphtest
+package com.zack.sphtest.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.zack.sphtest.LiveDataTestUtil.getValue
+import com.zack.sphtest.MainCoroutineRule
 import com.zack.sphtest.data.QuarterRecord
 import com.zack.sphtest.data.YearlyRecord
-import com.zack.sphtest.viewmodel.DataUsageViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule

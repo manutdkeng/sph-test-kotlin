@@ -1,4 +1,4 @@
-package com.zack.sphtest
+package com.zack.sphtest.viewmodel
 
 import com.zack.sphtest.data.QuarterRecord
 import com.zack.sphtest.data.Result

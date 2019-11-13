@@ -17,11 +17,11 @@ class DataUsageRepository(
     override suspend fun getDataUsageList(): Result<List<QuarterRecord>> {
         return withContext(ioDispatcher) {
 
-            var getDataUsageDeferred = restClient.getDataUsageList()
+            val getDataUsageDeferred = restClient.getDataUsageList()
             try {
                 val result = getDataUsageDeferred.await()
 
-                return@withContext Success(result.records.sortedByDescending { it.quarter })
+                return@withContext Success(result.result.records.sortedByDescending { it.quarter })
 
             } catch (e: Exception) {
                 return@withContext Error(e, "Api Failed")
