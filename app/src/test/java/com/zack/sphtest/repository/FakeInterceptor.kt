@@ -5,11 +5,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.zack.sphtest.data.QuarterRecord
 import com.zack.sphtest.data.source.remote.DataUsageResponse
 import com.zack.sphtest.data.source.remote.DataUsageResult
-import okhttp3.Interceptor
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.Protocol
-import okhttp3.Response
-import okhttp3.ResponseBody.Companion.toResponseBody
+import okhttp3.*
 
 /**
  * Create a FakeInterceptor to intercept the network call
@@ -44,7 +40,7 @@ class FakeInterceptor : Interceptor {
                 .protocol(Protocol.HTTP_1_1)
                 .code(400)
                 .message("Error")
-                .body("Error".toResponseBody("application/json".toMediaType()))
+                .body(ResponseBody.create(MediaType.parse("application/json"), "Error"))
                 .build()
 
         } else {
@@ -53,7 +49,7 @@ class FakeInterceptor : Interceptor {
                 .request(chain.request())
                 .protocol(Protocol.HTTP_1_1)
                 .message(responseStr)
-                .body(responseStr.toResponseBody("application/json".toMediaType()))
+                .body(ResponseBody.create(MediaType.parse("application/json"), responseStr))
                 .addHeader("content-type", "application/json")
                 .build()
         }
