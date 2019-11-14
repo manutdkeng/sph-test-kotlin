@@ -26,7 +26,20 @@ class DataUsageViewModel(
     fun getDataUsageList() {
         _loadingState.value = true
         viewModelScope.launch {
-            val result = repository.getDataUsageList()
+            val result = repository.getDataUsageList(false)
+
+            _loadingState.value = false
+            if (result is Result.Success) {
+                _data.value = processData(result.data)
+            } else {
+                _error.value = "Please try again later."
+            }
+        }
+    }
+
+    fun refreshData() {
+        viewModelScope.launch {
+            val result = repository.getDataUsageList(true)
 
             _loadingState.value = false
             if (result is Result.Success) {

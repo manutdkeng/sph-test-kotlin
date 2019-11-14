@@ -1,6 +1,7 @@
 package com.zack.sphtest
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         setObserver()
+        setListener()
     }
 
     override fun onStart() {
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setObserver() {
         viewModel.data.observe(this, Observer { records ->
+            binding.swipeContainer.isRefreshing = false
             if (adapter == null) {
                 adapter = DataUsageRecyclerViewAdapter(records)
                 binding.dataUsageList.adapter = adapter
@@ -46,7 +49,18 @@ class MainActivity : AppCompatActivity() {
         })
 
         viewModel.error.observe(this, Observer {
+            binding.swipeContainer.isRefreshing = false
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         })
+
+        viewModel.loadingState.observe(this, Observer {
+            binding.loadingLayout.visibility = if (it) View.VISIBLE else View.GONE
+        })
+    }
+
+    private fun setListener() {
+        binding.swipeContainer.setOnRefreshListener {
+            viewModel.refreshData()
+        }
     }
 }

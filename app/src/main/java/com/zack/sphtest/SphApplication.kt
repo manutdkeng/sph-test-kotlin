@@ -3,6 +3,7 @@ package com.zack.sphtest
 import android.app.Application
 import com.zack.sphtest.module.ApplicationComponent
 import com.zack.sphtest.module.DaggerApplicationComponent
+import com.zack.sphtest.module.DatabaseModule
 
 class SphApplication : Application() {
 
@@ -11,7 +12,9 @@ class SphApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        component = DaggerApplicationComponent.builder().build()
+        component = DaggerApplicationComponent.builder()
+            .databaseModule(DatabaseModule(this))
+            .build()
     }
 
     fun getAppComponent(): ApplicationComponent {

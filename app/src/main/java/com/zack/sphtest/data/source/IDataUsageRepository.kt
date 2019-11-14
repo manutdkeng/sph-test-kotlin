@@ -5,5 +5,5 @@ import com.zack.sphtest.data.Result
 
 interface IDataUsageRepository {
 
-    suspend fun getDataUsageList(): Result<List<QuarterRecord>>
+    suspend fun getDataUsageList(forceUpdate: Boolean): Result<List<QuarterRecord>>
 }
