@@ -1,4 +1,4 @@
-package com.zack.sphtest.repository
+package com.zack.sphtest
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi

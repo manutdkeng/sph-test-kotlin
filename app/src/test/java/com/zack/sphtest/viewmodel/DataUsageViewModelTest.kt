@@ -63,7 +63,6 @@ class DataUsageViewModelTest {
         assertThat(getValue(dataUsageViewModel.data)[1].year).isEqualTo(year18Record.year)
         assertThat(getValue(dataUsageViewModel.data)[1].dataUsageVolume).isEqualTo(year18Record.dataUsageVolume)
         assertThat(getValue(dataUsageViewModel.data)[1].records.size).isEqualTo(3)
-
     }
 
     @Test
@@ -84,5 +83,27 @@ class DataUsageViewModelTest {
 
         mainCoroutineRule.resumeDispatcher()
         assertThat(getValue(dataUsageViewModel.loadingState)).isFalse()
+    }
+
+    @Test
+    fun refreshData_success() {
+        dataUsageViewModel.refreshData()
+
+        assertThat(getValue(dataUsageViewModel.data)[0].year).isEqualTo(year19Record.year)
+        assertThat(getValue(dataUsageViewModel.data)[0].dataUsageVolume).isEqualTo(year19Record.dataUsageVolume)
+        assertThat(getValue(dataUsageViewModel.data)[0].records.size).isEqualTo(1)
+
+        assertThat(getValue(dataUsageViewModel.data)[1].year).isEqualTo(year18Record.year)
+        assertThat(getValue(dataUsageViewModel.data)[1].dataUsageVolume).isEqualTo(year18Record.dataUsageVolume)
+        assertThat(getValue(dataUsageViewModel.data)[1].records.size).isEqualTo(3)
+    }
+
+    @Test
+    fun refreshData_error() {
+        repository.setReturnError(true)
+        dataUsageViewModel.refreshData()
+
+        assertThat(getValue(dataUsageViewModel.error)).isEqualTo("Please try again later.")
+
     }
 }

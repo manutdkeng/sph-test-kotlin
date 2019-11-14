@@ -17,7 +17,7 @@ class FakeRepository : IDataUsageRepository {
         shouldReturnError = value
     }
 
-    override suspend fun getDataUsageList(): Result<List<QuarterRecord>> {
+    override suspend fun getDataUsageList(forceUpdate: Boolean): Result<List<QuarterRecord>> {
         return if (shouldReturnError) {
             Result.Error(Exception("Test error"), "Test error case")
         } else {
